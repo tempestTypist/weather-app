@@ -1,0 +1,30 @@
+:host {
+	--red-to-pink-to-purple-vertical-gradient: linear-gradient(
+		180deg,
+		var(--orange-red) 0%,
+		var(--vivid-pink) 50%,
+		var(--electric-violet) 100%
+	);
+
+	--red-to-pink-to-purple-horizontal-gradient: linear-gradient(
+		90deg,
+		var(--orange-red) 0%,
+		var(--vivid-pink) 50%,
+		var(--electric-violet) 100%
+	);
+}
+
+.divider {
+	width: 1px;
+	background: var(--red-to-pink-to-purple-vertical-gradient);
+	margin-inline: 0.5rem;
+}
+
+@media screen and (max-width: 650px) {
+	.divider {
+		height: 1px;
+		width: 100%;
+		background: var(--red-to-pink-to-purple-horizontal-gradient);
+		margin-block: 1.5rem;
+	}
+}
