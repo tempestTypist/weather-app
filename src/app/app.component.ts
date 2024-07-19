@@ -13,29 +13,33 @@ import { WeatherService } from './weather.service';
 export class AppComponent {
   title = 'weather-app';
   cityName: string = '';
-  weatherData: any;
   isChecked: boolean = false;
+  weatherData: any;
 
   constructor(private weatherService: WeatherService) { }
 
-  // ngOnInit(): void {
-  //   this.getWeatherForDefaultCity();
-  // }
+  ngOnInit(): void {
+    this.getWeatherForDefaultCity();
+  }
 
-  // getWeatherForDefaultCity() {
-  //   this.weatherService.getWeatherByCity('Chicago')
-  //     .subscribe((data) => {
-  //       this.weatherData = data;
-  //       console.log(data);
-  //     });
-  // }
+  getWeatherForDefaultCity() {
+    let units = this.isChecked ? 'imperial' : 'metric';
+
+    this.weatherService.getWeatherByCity('Chicago', units)
+      .subscribe((data) => {
+        this.weatherData = data;
+        console.log(data);
+      });
+  }
 
   getWeather() {
     if (this.cityName.trim() === '') {
       return;
     }
 
-    this.weatherService.getWeatherByCity(this.cityName.trim())
+    let units = this.isChecked ? 'imperial' : 'metric';
+
+    this.weatherService.getWeatherByCity(this.cityName.trim(), units)
       .subscribe((data) => {
         this.weatherData = data;
         console.log(data);
@@ -44,5 +48,6 @@ export class AppComponent {
   
   toggleUnits() {
     this.isChecked = !this.isChecked;
+    this.getWeather()
   }
 }

@@ -8,15 +8,16 @@ import { environment } from '../environments/environment.secret';
 })
 export class WeatherService {
   private apiKey = environment.apiKey;
+  // private geoCode = 
   private apiUrl = 'https://api.openweathermap.org/data/2.5/weather';
 
   constructor(private http: HttpClient) { }
 
-  getWeatherByCity(city: string): Observable<any> {
+  getWeatherByCity(city: string, units: string): Observable<any> {
     const params = new HttpParams()
       .set('q', city)
       .set('appid', this.apiKey)
-      .set('units', 'metric');
+      .set('units', units);
 
     return this.http.get(this.apiUrl, { params });
   }
