@@ -4,9 +4,28 @@
 			<h3 class="text-center my-4">Search for Weather:</h3>
 			<form>
 				<label for="cityInput">Enter City:</label>
-				<input type="text" id="cityInput" name="cityName" [(ngModel)]="cityName" placeholder="New York">
+				<input 
+          type="text" 
+          id="cityInput" 
+          name="cityName" 
+          [(ngModel)]="cityName" 
+          placeholder="New York"
+          >
+          <div class="form-check form-switch">
+            <input 
+              class="form-check-input" 
+              type="checkbox" 
+              role="switch" 
+              id="unitToggle" 
+              name="units" 
+              [(ngModel)]="isChecked" 
+              (click)="toggleUnits()">
+            <label class="form-check-label" for="unitToggle">{{ isChecked ? 'imperial' : 'metric' }}</label>
+          </div>
+
 				<button (click)="getWeather()">Get Weather</button>
 			</form>
+      
 		</div>
 		<!-- <div class="divider" role="separator" aria-label="Divider"></div> -->
 		<div class="col-md-6">
@@ -14,9 +33,10 @@
 			@if(weatherData) {
 				<div>
 					<h2>Current Weather in {{ weatherData.name }}</h2>
-					<p>Temperature: {{ weatherData.main.temp }}°C</p>
+					<p>Temperature: {{ weatherData.main.temp }}{{ isChecked ? '°F' : '°C'}}</p>
 					<p>Humidity: {{ weatherData.main.humidity }}%</p>
 					<p>Weather: {{ weatherData.weather[0].description }}</p>
+          <p>weather icons: {{ weatherData.weather[0].icon }}</p>
 				</div>
 			}
 		</div>

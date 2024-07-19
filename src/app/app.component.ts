@@ -6,7 +6,7 @@ import { WeatherService } from './weather.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FormsModule],
+  imports: [RouterOutlet, FormsModule ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -14,20 +14,21 @@ export class AppComponent {
   title = 'weather-app';
   cityName: string = '';
   weatherData: any;
+  isChecked: boolean = false;
 
   constructor(private weatherService: WeatherService) { }
 
-  ngOnInit(): void {
-    this.getWeatherForDefaultCity();
-  }
+  // ngOnInit(): void {
+  //   this.getWeatherForDefaultCity();
+  // }
 
-  getWeatherForDefaultCity() {
-    this.weatherService.getWeatherByCity('Chicago')
-      .subscribe((data) => {
-        this.weatherData = data;
-        console.log(data);
-      });
-  }
+  // getWeatherForDefaultCity() {
+  //   this.weatherService.getWeatherByCity('Chicago')
+  //     .subscribe((data) => {
+  //       this.weatherData = data;
+  //       console.log(data);
+  //     });
+  // }
 
   getWeather() {
     if (this.cityName.trim() === '') {
@@ -39,5 +40,9 @@ export class AppComponent {
         this.weatherData = data;
         console.log(data);
       });
+  }
+  
+  toggleUnits() {
+    this.isChecked = !this.isChecked;
   }
 }
