@@ -8,12 +8,17 @@ import { environment } from '../environments/environment.secret';
 })
 export class WeatherService {
   private apiKey = environment.apiKey;
-  // private geoCode = 
+  private geoCode = 'https://api.openweathermap.org/geo/1.0/direct';
   private apiUrl = 'https://api.openweathermap.org/data/2.5/weather';
 
   constructor(private http: HttpClient) { }
 
+  getCoordinates(city: string): Observable<any> {
+
+  }
+
   getWeatherByCity(city: string, units: string): Observable<any> {
+
     const params = new HttpParams()
       .set('q', city)
       .set('appid', this.apiKey)

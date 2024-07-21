@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ToggleButton } from './toggle-button.component';
+import { SearchButton } from './search-button.component';
 
-describe('ToggleButton', () => {
-  let component: ToggleButton;
-  let fixture: ComponentFixture<ToggleButton>;
+describe('SearchButton', () => {
+  let component: SearchButton;
+  let fixture: ComponentFixture<SearchButton>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ToggleButton]
+      imports: [SearchButton]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ToggleButton);
+    fixture = TestBed.createComponent(SearchButton);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -3,11 +3,22 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'toggle-button',
   standalone: true,
-  templateUrl: './toggle-button.component.html',
+  template: `
+  <div class="form-check form-switch">
+    <input 
+      class="form-check-input" 
+      type="checkbox" 
+      role="switch" 
+      id="unitToggle" 
+      name="units" 
+      [(ngModel)]="isChecked" 
+      (click)="toggleUnits()">
+    <label class="form-check-label" for="unitToggle">{{ isChecked ? 'imperial' : 'metric' }}</label>
+  </div>
+`,
   styleUrl: './toggle-button.component.css'
 })
-export class ToggleButtonComponent {
-  // toggleButton = new FormControl('metric');
+export class ToggleButton {
   isChecked: boolean = false;
 
   toggleSwitch() {
