@@ -9,18 +9,22 @@ import { environment } from '../environments/environment.secret';
 export class WeatherService {
   private apiKey = environment.apiKey;
   private geoCode = 'https://api.openweathermap.org/geo/1.0/direct';
-  private apiUrl = 'https://api.openweathermap.org/data/2.5/weather';
+  private apiUrl = 'https://api.openweathermap.org/data/2.5/forecast';
 
   constructor(private http: HttpClient) { }
 
   getCoordinates(city: string): Observable<any> {
-
-  }
-
-  getWeatherByCity(city: string, units: string): Observable<any> {
-
     const params = new HttpParams()
       .set('q', city)
+      .set('appid', this.apiKey);
+
+    return this.http.get(this.geoCode, { params });
+  }
+
+  getWeatherByCity(lat: number, lon: number, units: string): Observable<any> {
+    const params = new HttpParams()
+      .set('lat', lat)
+      .set('lon', lon)
       .set('appid', this.apiKey)
       .set('units', units);
 
