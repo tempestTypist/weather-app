@@ -15,33 +15,54 @@ import { ToggleButton } from './toggle-button/toggle-button.component';
   <main class="container">
     <div class="row">
 		  <div class="col-md-6">
-        <city-search></city-search>
+        <city-search 
+          (locationTitle)="setTitle($event)"
+          (weatherData)="receiveWeatherData($event)" 
+          (searchError)="handleSearchError($event)">
+        </city-search>
         <toggle-button [isChecked]="toggleChecked" (isCheckedChange)="onToggleChange($event)"></toggle-button>
       </div>
       <div class="col-md-6">
-      <p>{{ toggleChecked ? '°F' : '°C'}}</p>
-      @if(weatherData) {
+      @if(location) {
+        <h3>Current weather in {{ location }}</h3>
+      }
+      @if(receivedWeatherData) {
         <div>
-          <h3>Current Weather in {{ weatherData.city.name }}, {{ weatherData.city.country }}</h3>
-          <p>Temperature: {{ weatherData.list[0].main.temp }}{{ toggleChecked ? '°F' : '°C'}}</p>
-          <p>Humidity: {{ weatherData.list[0].main.humidity }}%</p>
-          <p>Weather: {{ weatherData.list[0].main.weather[0].description }}</p>
-          <p>weather icons: {{ weatherData.list[0].main.weather[0].icon }}</p>
+          <p>Temperature: {{ receivedWeatherData.current.temp }}{{ toggleChecked ? '°F' : '°C'}}</p>
+          <p>Humidity: {{ receivedWeatherData.current.humidity }}%</p>
+          <p>Weather: {{ receivedWeatherData.current.weather[0].description }}</p>
+          <p>weather icons: {{ receivedWeatherData.current.weather[0].icon }}</p>
         </div>
+      }
+      @if(errorMessage) {
+        <p>{{ errorMessage }}</p>
       }
       </div>
     </div>
   </main>
 `,
-  // templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'weather-app';
-  weatherData: any;
+  location: string = '';
+  receivedWeatherData: any;
+  errorMessage: string = '';
   toggleChecked: boolean = false;
 
   constructor() {}
+
+  setTitle(data: string) {
+    this.location = data;
+  }
+
+  receiveWeatherData(data: any) {
+    this.receivedWeatherData = data;
+  }
+
+  handleSearchError(error: string) {
+    this.errorMessage = error;
+  }
 
   onToggleChange(checked: boolean) {
     this.toggleChecked = checked;

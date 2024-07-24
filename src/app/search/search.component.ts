@@ -18,14 +18,17 @@ import { WeatherService } from '../weather.service';
     >  
   <button (click)="getCoords()" [disabled]="searchIsInvalid">Submit</button>
 `,
-  // templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })
 export class SearchComponent {
+  @Output() locationTitle: EventEmitter<string> = new EventEmitter();
   @Output() weatherData: EventEmitter<any> = new EventEmitter();
+  @Output() searchError: EventEmitter<string> = new EventEmitter();
+
   searchIsInvalid = false;
   isChecked: boolean = false;
   cityName: string = '';
+  title: string = '';
 
   constructor(private weatherService: WeatherService) { }
 
@@ -40,12 +43,18 @@ export class SearchComponent {
       switchMap((coords) => {
         let lat = coords[0].lat
         let lon =  coords[0].lon
+        let location = coords[0].name + ', ' + coords[0].country
+        console.log(coords)
+        this.locationTitle.emit(location)
         return this.weatherService.getWeatherByCity(lat, lon, units);
       })
-    ).subscribe((data) => {
-      this.weatherData = data;
+    ).subscribe(
+    data => {
       console.log(data);
       this.weatherData.emit(data);
+    },
+    error => {
+      this.searchError.emit(`Error occurred: ${error.message}`);
     });
   }
 }

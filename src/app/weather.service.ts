@@ -9,7 +9,7 @@ import { environment } from '../environments/environment.secret';
 export class WeatherService {
   private apiKey = environment.apiKey;
   private geoCode = 'https://api.openweathermap.org/geo/1.0/direct';
-  private apiUrl = 'https://api.openweathermap.org/data/2.5/forecast';
+  private apiUrl = 'https://api.openweathermap.org/data/2.5/onecall';
 
   constructor(private http: HttpClient) { }
 
@@ -25,6 +25,7 @@ export class WeatherService {
     const params = new HttpParams()
       .set('lat', lat)
       .set('lon', lon)
+      .set('exclude', 'minutely,hourly,alerts')
       .set('appid', this.apiKey)
       .set('units', units);
 
