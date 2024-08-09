@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { WeatherService } from '../weather.service';
 
 @Component({
   selector: 'toggle-button',
@@ -13,20 +14,35 @@ import { FormsModule } from '@angular/forms';
       role="switch" 
       id="unitToggle" 
       name="units" 
-      (click)="toggleSwitch()">
-    <label class="form-check-label" for="unitToggle">{{ isChecked ? 'imperial' : 'metric' }}</label>
+      (click)="onUnitToggled()">
+    <label class="form-check-label" for="unitToggle">Switch to {{ currentUnit === 'metric' ? 'Imperial' : 'Metric' }}</label>
   </div>
 `,
   styleUrl: './toggle-button.component.css'
 })
 export class ToggleButton {
-  @Input() isChecked: boolean = false;
-  @Output() isCheckedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  weatherData: any;
+  currentUnit: string = 'metric';
 
-  constructor() { }
+  constructor(private weatherService: WeatherService) { 
+    this.weatherService.units$.subscribe(
+      unit => { this.currentUnit = unit; },
+      error => console.error('Error:', error));
+  }
 
-  toggleSwitch() {
-    this.isChecked = !this.isChecked;
-    this.isCheckedChange.emit(this.isChecked);
+  onUnitToggled() {
+    this.weatherService.toggleUnits();
+    if (this.weatherData) {
+    this.weatherService.getWeather().subscribe(
+      data => {
+        //takes the data fetched from api and runs it through processData function
+        //assigns to processedData and updates weatherData in weather service
+        const processedData = this.weatherService.processData(data);
+        this.weatherService.updateWeatherData(processedData);
+      },
+      error => {
+        console.error('Weather fetching error:', error);
+      });
+    }
   }
 }

@@ -1,0 +1,11 @@
+.forecast {
+	display: flex;
+}
+
+div[class^="forecast-"] {
+	background: rgb(3,69,144);
+	background: -moz-linear-gradient(195deg, rgba(3,69,144,1) 0%, rgba(0,234,255,1) 100%);
+	background: -webkit-linear-gradient(195deg, rgba(3,69,144,1) 0%, rgba(0,234,255,1) 100%);
+	background: linear-gradient(195deg, rgba(3,69,144,1) 0%, rgba(0,234,255,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#034590",endColorstr="#00eaff",GradientType=1);
+}
